@@ -35,10 +35,10 @@ const LETTERS = [
   'ż',
 ]
 
-const LetterBox = () => {
+const LetterList = () => {
   return (
     <div>
-      <h1>Cześć, Igor! Wybierz jakąś literę! </h1>
+      <h1 className="mb-8">Cześć, Igor! Wybierz jakąś literę! </h1>
       <div className="grid grid-cols-7 gap-4">
         {LETTERS.map((letter) => (
           <Letter key={letter} letter={letter} />
@@ -48,4 +48,4 @@ const LetterBox = () => {
   )
 }
 
-export default LetterBox
+export default LetterList

@@ -1,13 +1,15 @@
 import React from 'react'
 import './App.css'
 import Card from './components/Card/Card'
-import LetterBox from './components/LetterBox/LetterBox'
+import LetterList from './components/LetterList/LetterList'
 import YouTubePlayer from './components/YouTubePlayer/YouTubePlayer'
+import CardList from './components/CardList/CardList'
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <LetterBox />
+        <CardList />
+        <LetterList />
       </header>
     </div>
   )
