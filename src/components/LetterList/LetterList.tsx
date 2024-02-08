@@ -37,14 +37,14 @@ const LETTERS = [
 
 const LetterList = () => {
   return (
-    <div>
+    <>
       <h1 className="mb-8">Cześć, Igor! Wybierz jakąś literę! </h1>
-      <div className="grid grid-cols-7 gap-4">
+      <div className="flex flex-wrap gap-10 justify-center pt-20">
         {LETTERS.map((letter) => (
           <Letter key={letter} letter={letter} />
         ))}
       </div>
-    </div>
+    </>
   )
 }
 

@@ -1,14 +1,37 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+body {
+  background: linear-gradient(
+    45deg,
+    #e9d708 25%,
+    #d7ba37 25%,
+    #d7ba37 50%,
+    #e9d708 50%,
+    #e9d708 75%,
+    #d7ba37 75%,
+    #d7ba37
+  );
+  background-size: 50px 50px;
 }
 
-.App-header {
-  background-color: #b4e36b;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.card:focus {
+  animation: tilt-shaking 0.25s;
 }
