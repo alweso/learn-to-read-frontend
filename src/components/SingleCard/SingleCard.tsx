@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import wordsList from '../../constants/wordlist'
+import { useLoading } from '../../hooks/useLoading'
+import Loader from '../Loader/Loader'
 
 const SingleCard = () => {
   const params = useParams()
@@ -12,13 +14,14 @@ const SingleCard = () => {
     imageBig: string
   } | null>(null)
 
+  const { loading, setLoading, checkAllImagesLoaded } = useLoading(true)
+
   const playSound = () => {
     const audio = new Audio(cardData?.sound)
     audio.play()
   }
 
   useEffect(() => {
-    // Filter the list of cards based on params.card
     const selectedCard = wordsList.find((card) => card.word === params.card)
 
     setCardData(
@@ -30,7 +33,10 @@ const SingleCard = () => {
         imageBig: string
       },
     )
-  }, [params.card])
+
+    // Use the checkAllImagesLoaded function from the custom hook
+    checkAllImagesLoaded([selectedCard?.imageBig || '']) // Pass an array with the image URLs to check
+  }, [params.card, checkAllImagesLoaded])
 
   useEffect(() => {
     // Check if cardData is defined before playing sound
@@ -39,9 +45,9 @@ const SingleCard = () => {
     }
   }, [cardData])
 
-  if (!cardData) {
+  if (loading || !cardData) {
     // Display a loading indicator or error message here
-    return <div>Loading...</div>
+    return <Loader />
   }
 
   return (
