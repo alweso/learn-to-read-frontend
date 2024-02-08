@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Card from '../Card/Card'
 import Loader from '../Loader/Loader'
 import wordsList, { WordItem } from '../../constants/wordlist' // Assuming WordItem type is defined in wordlist
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const CardList: React.FC = () => {
   const params = useParams<{ letter: string }>()
@@ -42,12 +42,14 @@ const CardList: React.FC = () => {
         <Loader />
       ) : (
         filteredWordsList.map((item) => (
-          <Card
-            key={item.word}
-            image={item.image}
-            word={item.word}
-            sound={item.sound}
-          />
+          <Link to={`/card/${item.word}`} key={item.word}>
+            <Card
+              key={item.word}
+              image={item.image}
+              word={item.word}
+              sound={item.sound}
+            />
+          </Link>
         ))
       )}
     </div>

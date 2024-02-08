@@ -38,7 +38,6 @@ const LETTERS = [
 const LetterList = () => {
   return (
     <>
-      <h1 className="mb-8">Cześć, Igor! Wybierz jakąś literę! </h1>
       <div className="flex flex-wrap gap-10 justify-center pt-20">
         {LETTERS.map((letter) => (
           <Letter key={letter} letter={letter} />
