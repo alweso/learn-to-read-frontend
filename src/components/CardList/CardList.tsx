@@ -13,7 +13,6 @@ const CardList = () => {
     const filteredList = wordsList.filter(
       (item) => item.letter === params.letter,
     )
-
     setFilteredWordsList(filteredList)
   }, [params.letter])
 
@@ -34,13 +33,15 @@ const CardList = () => {
         </div>
       ))}
 
-      {selectedCard && (
+      {filteredWordsList.map((item: WordItem) => (
         <SingleCard
-          word={selectedCard.word}
-          imageBig={selectedCard.imageBig}
-          sound={selectedCard.sound}
+          key={item.word}
+          word={item.word}
+          imageBig={item.imageBig}
+          sound={item.sound}
+          visible={selectedCard?.word === item.word}
         />
-      )}
+      ))}
     </div>
   )
 }
