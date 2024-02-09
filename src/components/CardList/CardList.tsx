@@ -1,13 +1,16 @@
-import Card from '../Card/Card'
-import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import Card from '../Card/Card'
 import SingleCard from '../../components/SingleCard/SingleCard'
 import wordsList, { WordItem } from '../../constants/wordlist'
+import { useAppContext } from '../../contexts/AppContext'
 
-const CardList = () => {
-  const params = useParams<{ letter: string }>()
+const CardList: React.FC = () => {
+  const { showSingleCard } = useAppContext()
   const [filteredWordsList, setFilteredWordsList] = useState<WordItem[]>([])
   const [selectedCard, setSelectedCard] = useState<WordItem | null>(null)
+
+  const params = useParams<{ letter: string }>()
 
   useEffect(() => {
     const filteredList = wordsList.filter(
@@ -15,10 +18,6 @@ const CardList = () => {
     )
     setFilteredWordsList(filteredList)
   }, [params.letter])
-
-  const handleCardClick = (selectedCard: WordItem) => {
-    setSelectedCard(selectedCard)
-  }
 
   return (
     <div className="flex flex-wrap gap-10 justify-center pt-20">
@@ -28,19 +27,16 @@ const CardList = () => {
             image={item.image}
             word={item.word}
             sound={item.sound}
-            onClick={() => handleCardClick(item)}
+            onClick={() => {
+              showSingleCard() // Show SingleCard when clicked
+              setSelectedCard(item)
+            }}
           />
         </div>
       ))}
 
       {filteredWordsList.map((item: WordItem) => (
-        <SingleCard
-          key={item.word}
-          word={item.word}
-          imageBig={item.imageBig}
-          sound={item.sound}
-          visible={selectedCard?.word === item.word}
-        />
+        <SingleCard item={item} selectedCard={selectedCard} />
       ))}
     </div>
   )
