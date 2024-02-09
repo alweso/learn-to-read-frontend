@@ -82,4 +82,5 @@ export type WordItem = {
   word: string
   sound: string
   image: string
+  imageBig: string
 }

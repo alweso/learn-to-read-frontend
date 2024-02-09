@@ -1,18 +1,13 @@
-// CardList.tsx
-
-import React, { useEffect } from 'react'
 import Card from '../Card/Card'
-import Loader from '../Loader/Loader'
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import SingleCard from '../../components/SingleCard/SingleCard'
 import wordsList, { WordItem } from '../../constants/wordlist'
-import { Link, useParams } from 'react-router-dom'
-import { useLoading } from '../../hooks/useLoading' // Import the custom hook
 
-const CardList: React.FC = () => {
+const CardList = () => {
   const params = useParams<{ letter: string }>()
-  const { loading, setLoading, checkAllImagesLoaded } = useLoading(true)
-  const [filteredWordsList, setFilteredWordsList] = React.useState<WordItem[]>(
-    [],
-  )
+  const [filteredWordsList, setFilteredWordsList] = useState<WordItem[]>([])
+  const [selectedCard, setSelectedCard] = useState<WordItem | null>(null)
 
   useEffect(() => {
     const filteredList = wordsList.filter(
@@ -20,26 +15,31 @@ const CardList: React.FC = () => {
     )
 
     setFilteredWordsList(filteredList)
+  }, [params.letter])
 
-    // Use the checkAllImagesLoaded function from the custom hook
-    checkAllImagesLoaded(filteredList.map((item) => item.image))
-  }, [params.letter, checkAllImagesLoaded])
+  const handleCardClick = (selectedCard: WordItem) => {
+    setSelectedCard(selectedCard)
+  }
 
   return (
     <div className="flex flex-wrap gap-10 justify-center pt-20">
-      {loading ? (
-        <Loader />
-      ) : (
-        filteredWordsList.map((item) => (
-          <Link to={`/card/${item.word}`} key={item.word}>
-            <Card
-              key={item.word}
-              image={item.image}
-              word={item.word}
-              sound={item.sound}
-            />
-          </Link>
-        ))
+      {filteredWordsList.map((item: WordItem) => (
+        <div key={item.word}>
+          <Card
+            image={item.image}
+            word={item.word}
+            sound={item.sound}
+            onClick={() => handleCardClick(item)}
+          />
+        </div>
+      ))}
+
+      {selectedCard && (
+        <SingleCard
+          word={selectedCard.word}
+          imageBig={selectedCard.imageBig}
+          sound={selectedCard.sound}
+        />
       )}
     </div>
   )

@@ -1,0 +1,8 @@
+.singleCard {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #000000ba;
+  width: 100%;
+  height: 100%;
+}
