@@ -36,6 +36,7 @@ const LETTERS = [
 ]
 
 const LetterList = () => {
+  // adding a comment to test changing name of repo
   return (
     <>
       <div className="flex flex-wrap gap-10 justify-center pt-20">
