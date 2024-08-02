@@ -1,18 +1,14 @@
-// CardList.tsx
-
 import React, { useEffect } from 'react'
 import Card from '../Card/Card'
 import Loader from '../Loader/Loader'
 import wordsList, { WordItem } from '../../constants/wordlist'
 import { Link, useParams } from 'react-router-dom'
-import { useLoading } from '../../hooks/useLoading' // Import the custom hook
+import { useLoading } from '../../hooks/useLoading'
 
 const CardList: React.FC = () => {
   const params = useParams<{ letter: string }>()
-  const { loading, setLoading, checkAllImagesLoaded } = useLoading(true)
-  const [filteredWordsList, setFilteredWordsList] = React.useState<WordItem[]>(
-    [],
-  )
+  const { loading, checkAllImagesLoaded } = useLoading(true)
+  const [filteredWordsList, setFilteredWordsList] = React.useState<WordItem[]>([])
 
   useEffect(() => {
     const filteredList = wordsList.filter(
@@ -21,7 +17,6 @@ const CardList: React.FC = () => {
 
     setFilteredWordsList(filteredList)
 
-    // Use the checkAllImagesLoaded function from the custom hook
     checkAllImagesLoaded(filteredList.map((item) => item.image))
   }, [params.letter, checkAllImagesLoaded])
 
@@ -33,7 +28,6 @@ const CardList: React.FC = () => {
         filteredWordsList.map((item) => (
           <Link to={`/card/${item.word}`} key={item.word}>
             <Card
-              key={item.word}
               image={item.image}
               word={item.word}
               sound={item.sound}

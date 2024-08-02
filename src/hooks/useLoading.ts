@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 // Custom hook for handling loading state
 export const useLoading = (initialState: boolean) => {
   const [loading, setLoading] = useState<boolean>(initialState)
 
   // Function to check if all images are loaded
-  const checkAllImagesLoaded = (imageUrls: string[]) => {
+  const checkAllImagesLoaded = useCallback((imageUrls: string[]) => {
     const images: HTMLImageElement[] = imageUrls.map((url) => {
       const img = new Image()
       img.src = url
@@ -25,7 +25,7 @@ export const useLoading = (initialState: boolean) => {
       img.onload = onLoad
       img.onerror = onLoad
     })
-  }
+  }, [setLoading])
 
   return {
     loading,
