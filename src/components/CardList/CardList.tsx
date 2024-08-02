@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card'
 import Loader from '../Loader/Loader'
 import wordsList, { WordItem } from '../../constants/wordlist'
@@ -8,16 +8,18 @@ import { useLoading } from '../../hooks/useLoading'
 const CardList: React.FC = () => {
   const params = useParams<{ letter: string }>()
   const { loading, checkAllImagesLoaded } = useLoading(true)
-  const [filteredWordsList, setFilteredWordsList] = React.useState<WordItem[]>([])
+  const [filteredWordsList, setFilteredWordsList] = useState<WordItem[]>([])
 
   useEffect(() => {
-    const filteredList = wordsList.filter(
-      (item) => item.letter === params.letter,
-    )
+    if (params.letter) {
+      const filteredList = wordsList.filter(
+        (item) => item.letter === params.letter,
+      )
 
-    setFilteredWordsList(filteredList)
+      setFilteredWordsList(filteredList)
 
-    checkAllImagesLoaded(filteredList.map((item) => item.image))
+      checkAllImagesLoaded(filteredList.map((item) => item.image))
+    }
   }, [params.letter, checkAllImagesLoaded])
 
   return (
